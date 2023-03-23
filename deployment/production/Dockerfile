@@ -14,6 +14,9 @@ RUN go build -o main ./cmd/main
 
 FROM alpine:3.17.1
 
+RUN apk update
+RUN apk add --no-cache tzdata
+
 WORKDIR /app
 COPY --from=builder /app/main .
 COPY --from=builder /app/config/config.yaml /app/config/
