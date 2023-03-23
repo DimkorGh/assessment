@@ -60,7 +60,7 @@ func TestAddPeriod(t *testing.T) {
 				t:      time.Date(2022, 1, 1, 21, 5, 6, 7, time.UTC),
 				tZone:  time.UTC,
 			},
-			want: time.Date(2022, 12, 31, 21, 0, 0, 0, time.UTC),
+			want: time.Date(2023, 12, 31, 21, 0, 0, 0, time.UTC),
 		},
 	}
 

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/gorilla/schema"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/httptest"
 	"github.com/spf13/viper"
@@ -133,7 +134,7 @@ func initializeHandler() *PtListHandler {
 	logger.Initialize()
 
 	structValidator := validators.NewStructValidator(validator.New())
-	urlParamsParser := parser.NewUrlParamsParser(structValidator)
+	urlParamsParser := parser.NewUrlParamsParser(structValidator, schema.NewDecoder())
 
 	ptListDomain := domain.NewPtListDomain()
 	ptListService := service.NewPtListService(ptListDomain)

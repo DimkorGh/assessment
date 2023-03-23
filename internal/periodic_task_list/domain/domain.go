@@ -33,8 +33,8 @@ func (pld *PtListDomain) AddPeriod(period string, t time.Time) time.Time {
 	case oneMonthPeriod:
 		t = t.AddDate(0, 1, -1)
 		t = pld.getMonthLastDay(t)
-	default:
-		t = t.AddDate(1, 0, -1)
+	case oneYearPeriod:
+		t = t.AddDate(1, 0, 0)
 		t = pld.getYearLastDay(t)
 	}
 
@@ -63,8 +63,5 @@ func (pld *PtListDomain) getMonthLastDay(t time.Time) time.Time {
 }
 
 func (pld *PtListDomain) getYearLastDay(t time.Time) time.Time {
-	nextYearFirstDay := time.Date(t.Year()+1, 1, 1, t.Hour(), 0, 0, 0, t.Location())
-	lastYearLastDay := nextYearFirstDay.AddDate(0, 0, -1)
-
-	return lastYearLastDay
+	return time.Date(t.Year(), 12, 31, t.Hour(), 0, 0, 0, t.Location())
 }

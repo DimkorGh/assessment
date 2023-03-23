@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/golang/mock/gomock"
+	"github.com/gorilla/schema"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/httptest"
 	"github.com/kataras/iris/v12/x/errors"
@@ -22,7 +23,7 @@ func TestNewPtListHandler(t *testing.T) {
 	t.Run("Test ptList handler constructor", func(t *testing.T) {
 		logger := logging.NewLogger(nil)
 		structValidator := validators.NewStructValidator(validator.New())
-		urlParamsParser := parser.NewUrlParamsParser(structValidator)
+		urlParamsParser := parser.NewUrlParamsParser(structValidator, schema.NewDecoder())
 
 		ptListDomain := domain.NewPtListDomain()
 		ptListService := service.NewPtListService(ptListDomain)

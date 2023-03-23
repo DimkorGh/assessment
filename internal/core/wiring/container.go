@@ -2,6 +2,7 @@ package wiring
 
 import (
 	"github.com/go-playground/validator/v10"
+	"github.com/gorilla/schema"
 	"github.com/kataras/iris/v12"
 	"github.com/spf13/viper"
 
@@ -16,22 +17,27 @@ import (
 )
 
 type Container struct {
-	Server *server.Server
-	Logger *logging.Logger
+	Server        *server.Server
+	Logger        *logging.Logger
+	serverAddress string
+	serverPort    int
 }
 
-func NewContainer() *Container {
-	return &Container{}
+func NewContainer(serverAddress string, serverPort int) *Container {
+	return &Container{
+		serverAddress: serverAddress,
+		serverPort:    serverPort,
+	}
 }
 
-func (c *Container) InitializeDependencies(address string, port int) {
+func (c *Container) InitializeDependencies() {
 	vpr := viper.New()
 	cfg := config.NewConfig(vpr)
 
 	cfg.Load("config")
 
-	cfg.SetServerAddress(address)
-	cfg.SetServerPort(port)
+	cfg.SetServerAddress(c.serverAddress)
+	cfg.SetServerPort(c.serverPort)
 
 	logger := logging.NewLogger(cfg)
 	logger.Initialize()
@@ -39,7 +45,7 @@ func (c *Container) InitializeDependencies(address string, port int) {
 	irisApp := iris.New()
 
 	structValidator := validators.NewStructValidator(validator.New())
-	urlParamsParser := parser.NewUrlParamsParser(structValidator)
+	urlParamsParser := parser.NewUrlParamsParser(structValidator, schema.NewDecoder())
 
 	ptListDomain := domain.NewPtListDomain()
 	ptListService := service.NewPtListService(ptListDomain)

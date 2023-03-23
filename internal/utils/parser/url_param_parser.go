@@ -14,16 +14,18 @@ type UrlParamsParserInt interface {
 
 type UrlParamsParser struct {
 	structValidator validators.StructValidatorInt
+	schemaDecoder   *schema.Decoder
 }
 
-func NewUrlParamsParser(structValidator validators.StructValidatorInt) *UrlParamsParser {
+func NewUrlParamsParser(structValidator validators.StructValidatorInt, schemaDecoder *schema.Decoder) *UrlParamsParser {
 	return &UrlParamsParser{
 		structValidator: structValidator,
+		schemaDecoder:   schemaDecoder,
 	}
 }
 
 func (upp *UrlParamsParser) ParseUrlParams(r *http.Request, data interface{}) error {
-	if err := schema.NewDecoder().Decode(data, r.URL.Query()); err != nil {
+	if err := upp.schemaDecoder.Decode(data, r.URL.Query()); err != nil {
 		return &UrlParamParserError{err.Error()}
 	}
 

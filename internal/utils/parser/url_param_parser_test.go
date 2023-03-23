@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/gorilla/schema"
 	"github.com/stretchr/testify/assert"
 
 	"assessment/internal/utils/validators"
@@ -68,7 +69,7 @@ func TestParseUrlParams(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			strValidator := validators.NewStructValidator(validator.New())
-			parser := NewUrlParamsParser(strValidator)
+			parser := NewUrlParamsParser(strValidator, schema.NewDecoder())
 
 			err := parser.ParseUrlParams(tt.args.httpRequest, tt.args.parseData)
 

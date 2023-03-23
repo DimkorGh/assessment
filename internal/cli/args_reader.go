@@ -8,7 +8,7 @@ import (
 
 const (
 	defaultAddress = "0.0.0.0"
-	defaultPort    = 8080
+	defaultPort    = 8090
 	minPort        = 0
 	maxPort        = 65535
 )
@@ -46,7 +46,7 @@ func (ar *ArgsReader) ReadArgs() (string, int, error) {
 func (*ArgsReader) validateAddress(address string) error {
 	if net.ParseIP(address) == nil {
 		return ArgsReaderError{
-			errMessage: fmt.Sprintf("Server address value is not valid"),
+			errMessage: "Server address value is not valid",
 		}
 	}
 

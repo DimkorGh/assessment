@@ -59,6 +59,6 @@ func (s *Server) Shutdown() {
 
 	err := s.irisApp.Shutdown(ctx)
 	if err != nil {
-		s.logger.Errorf("Error while shutdown server: %s", err.Error())
+		s.logger.Errorf("Error while shutting down server: %s", err.Error())
 	}
 }

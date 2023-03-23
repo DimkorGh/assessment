@@ -57,11 +57,13 @@ http://127.0.0.1:8080/ptlist?period=1mo&tz=Europe/Athens&t1=20210214T204603Z&t2=
 ---
 </details>
 
+---
+
 ### Makefile Commands
 
 | Command                               | Usage                                                      |
 |---------------------------------------|------------------------------------------------------------|
-| docker.app.start                      | `Start all services`                                       |
+| docker.app.start                      | `Start app`                                                |
 | docker.test.unit                      | `Run unit tests via docker`                                |
 | docker.test.all                       | `Run both unit and integration tests via docker`           |
 | docker.test.all.coverage.withView     | `Run both unit and integration tests via docker with view` |

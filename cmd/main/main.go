@@ -17,8 +17,8 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	container := wiring.NewContainer()
-	container.InitializeDependencies(address, port)
+	container := wiring.NewContainer(address, port)
+	container.InitializeDependencies()
 
 	osSignal := make(chan os.Signal)
 	signal.Notify(osSignal, os.Interrupt, syscall.SIGTERM)
